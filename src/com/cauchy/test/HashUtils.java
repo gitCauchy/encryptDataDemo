@@ -29,7 +29,10 @@ public class HashUtils {
 		}
 		return stringBuilder.toString();
 	}
-
+	/**
+	 * 测试
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		System.out.println(getMD5String("123456"));
 	}
