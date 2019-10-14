@@ -1,4 +1,4 @@
-package com.cauchy.test;
+package com.cauchy.encrypt;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
