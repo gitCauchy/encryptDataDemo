@@ -6,10 +6,12 @@ public class FeatureExhibition {
 	public static void main(String[] args) throws Exception{
 		// 待加密数据
 		String dataForTest = "{\"customerid\":\"123456\",\"cardtype\":\"1\",\"deviceid\":\"12345678910\"}";
+		// 对原始数据Base64编码
+		String dataEncodedWithBase64 = Base64Utils.encodeWithBase64(dataForTest);
 		// 先生成一个随机堆成加密密钥
 		String key = GenerateRandomKey.getRandomString(8);
 		// 加密原始报文
-		String encryptedData = SymmetricalEncryptUtils.encryptDataWith3DES(dataForTest, key);
+		String encryptedData = SymmetricalEncryptUtils.encryptDataWith3DES(dataEncodedWithBase64, key);
 		// 对随机生成密钥进行公钥加密
 		Map<String, String> keyMap = DissymetricalEncryptUtils.createKeys(1024);
         String  publicKey = keyMap.get("publicKey");
@@ -23,11 +25,13 @@ public class FeatureExhibition {
         String decryptedKey = DissymetricalEncryptUtils.privateDecrypt(encryptedKey, DissymetricalEncryptUtils.getPrivateKey(privateKey));
         // 使用非对称算法解密出来的对称密钥对加密数据解密
         String decryptedData = SymmetricalEncryptUtils.decryptDataWith3DES(encryptedData, decryptedKey);
+        // Base64解密：
+        String decodedDataWithBase64 = Base64Utils.decodeWithBase64(decryptedData);
         // 对解密的数据获取MD5散列
-        String md5Str2 = HashUtils.getMD5String(decryptedData);
+        String md5Str2 = HashUtils.getMD5String(decodedDataWithBase64);
         if(md5Str1.equals(md5Str2)) {
         	System.out.println("======================反篡改校验成功================");
-        	System.out.println("原始数据：" + decryptedData);
+        	System.out.println("原始数据：" + decodedDataWithBase64);
         }else {
         	System.out.println("======================反篡改校验失败================");
         }
