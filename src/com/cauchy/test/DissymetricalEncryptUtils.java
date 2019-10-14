@@ -26,10 +26,11 @@ import org.apache.commons.io.IOUtils;
  *
  */
 public class DissymetricalEncryptUtils {
-	private static final String CHARSET = "UTF-8";
+	
 	/**
 	 * @description 创建密钥生成器
-	 * @param 密钥长度
+	 * @param keySize 密钥长度
+	 * @return keyPairMap
 	 */
 	public static Map<String,String>createKeys(int keySize){
 		KeyPairGenerator keyPairGenerator = null;
@@ -60,7 +61,7 @@ public class DissymetricalEncryptUtils {
 		return key;
 	}
 	/**
-	 * 得到私钥
+	 * 获取私钥
 	 * @throws NoSuchAlgorithmException 
 	 * @throws InvalidKeySpecException 
 	 */
@@ -71,7 +72,9 @@ public class DissymetricalEncryptUtils {
 		return key;
 	}
 	/**
-	 * 公钥加密
+	 * @description 公钥加密
+	 * @param data 待加密数据
+	 * @param publicKey 公钥
 	 */
 	public static String publicEncrypt(String data,RSAPublicKey publicKey) {
 		try {
@@ -83,7 +86,9 @@ public class DissymetricalEncryptUtils {
 		}
 	}
 	/**
-	 * 私钥解密
+	 * @description 私钥解密
+	 * @param data 待加密数据
+	 * @param privateKey 私钥
 	 */
 	public static String privateDecrypt(String data,RSAPrivateKey privateKey) {
 		try {
@@ -95,7 +100,7 @@ public class DissymetricalEncryptUtils {
 		}
 	}
 	 /**
-     * 私钥加密
+     * @description 私钥加密
      * @param data
      * @param privateKey
      * @return
@@ -165,13 +170,7 @@ public class DissymetricalEncryptUtils {
         System.out.println("私钥： \n\r" + privateKey);
 
         System.out.println("公钥加密——私钥解密");
-        String str = "站在大明门前守卫的禁卫军，事先没有接到\n" +
-                "有关的命令，但看到大批盛装的官员来临，也就\n" +
-                "以为确系举行大典，因而未加询问。进大明门即\n" +
-                "为皇城。文武百官看到端门午门之前气氛平静，\n" +
-                "城楼上下也无朝会的迹象，既无几案，站队点名\n" +
-                "的御史和御前侍卫“大汉将军”也不见踪影，不免\n" +
-                "心中揣测，互相询问：所谓午朝是否讹传？";
+        String str = "HelloWorld";
         System.out.println("\r明文：\r\n" + str);
         System.out.println("\r明文大小：\r\n" + str.getBytes().length);
         String encodedData = DissymetricalEncryptUtils.publicEncrypt(str, DissymetricalEncryptUtils.getPublicKey(publicKey));
@@ -181,4 +180,8 @@ public class DissymetricalEncryptUtils {
 
 
     }
+    /**
+	 * 设定字符集
+	 */
+	private static final String CHARSET = "UTF-8";
 }

@@ -16,10 +16,6 @@ import com.sun.org.apache.xml.internal.security.utils.Base64;
  */
 public class SymmetricalEncryptUtils {
 	/**
-	 * 编码方式
-	 */
-	private final static String ENCODING = "utf-8";
-	/**
 	 * @param key 密钥
 	 * @param data 原文
 	 * @return encryptedData 密文
@@ -38,9 +34,10 @@ public class SymmetricalEncryptUtils {
 		// 使用密钥初始化Cipher对象
 		cipher.init(Cipher.ENCRYPT_MODE, secretKey, secureRandom);
 		// 对待加密数据加密
-		byte[] encryptData = cipher.doFinal(data.getBytes(ENCODING));
+		byte[] encryptData = cipher.doFinal(data.getBytes(CHAESET));
 		return Base64.encode(encryptData);
 	}
+
 	/**
 	 * 
 	 * @param encryptedData 密文
@@ -61,6 +58,11 @@ public class SymmetricalEncryptUtils {
 		cipher.init(Cipher.DECRYPT_MODE, secretKey, secureRandom);
 		// 正式进行解密操作
 		byte[] decryptData = cipher.doFinal(Base64.decode(encryptedData));
-		return new String(decryptData, ENCODING);
+		return new String(decryptData, CHAESET);
 	}
+
+	/*
+	 * 字符集
+	 */
+	private final static String CHAESET = "utf-8";
 }
