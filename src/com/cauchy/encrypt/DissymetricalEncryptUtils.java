@@ -20,7 +20,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 
 /**
- * @description 对称加密工具类，采用3DES算法加解密
+ * @description 非对称加密工具类，采用RSA算法加解密
  * @author Cauchy
  * @date 2019/09/10
  *
